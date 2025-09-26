@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head> 
+    <meta charset="utf-8">
+    <title> insta485 </title>
+</head>
+
+<body>
+    <!--Navigation bar-->>
+    <nav> 
+        <a href="/">insta485</a> | 
+        <a href="/explore/">explore</a> | 
+        <a href="/users/{{ logname }}/">{{ logname }}</a>
+    </nav>
+
+    <img src="{{ img_url }}" alt="postPic" height="400" width="400"> <br> 
+        <img src="{{ owner_img_url }}" alt="profilePic" height="40" width="40">
+        <a href="/users/{{ owner}}/"> 
+        {{ owner }}   
+        </a>
+        {{ timestamp }}<br>   
+        {{likes}} {{ "like" if likes == 1 else "likes" }} <br>
+        {% if liked %}
+            <form action="/likes/?target={{ request.path }}" method="post">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+            <input type="hidden" name="postid" value="{{ post['postid'] }}">
+            <input type="hidden" name="operation" value="unlike">
+            <input type="hidden" name="unlike" value="unlike"/>
+            <button type="submit">unlike</button>
+            </form>
+        {% else %}
+            <form action="/likes/?target={{ request.path }}" method="post">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+            <input type="hidden" name="postid" value="{{ post['postid'] }}">
+            <input type="hidden" name="operation" value="like">
+            <input type="hidden" name="like" value="like"/>
+            <button type="submit">like</button>
+            </form>
+        {% endif %}
+        <ul> 
+            {% for comment in comments %}
+            <li> 
+                <a href="/users/{{ comment.owner }}/"> 
+                    {{ comment.owner }} 
+                </a>
+                {{ comment.text }}
+                {% if comment.owner == logname %}
+                    <form action="/comments/?target={{request.path}}" method="post" enctype="multipart/form-data">
+                        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                        <input type="hidden" name="operation" value="delete"/>
+                        <input type="hidden" name="commentid" value="{{comment.commentid }}"/>
+                        <input type="submit" name="uncomment" value="delete"/>
+                    </form>
+                {% endif %}
+            </li>
+            {% endfor %}
+        </ul> 
+
+        <form action="/comments/?target={{ request.path }}" method="post">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+            <input type="hidden" name="operation" value="create"/>
+            <input type="hidden" name="postid" value="{{ post['postid'] }}"/>
+            <input type="text" name="text" required/>
+            <input type="submit" name="comment" value="comment"/>
+        </form>
+
+    {% if post.owner == logname%}
+        <form action="/posts/?target=/users/{{ post.owner }}/" method="post" enctype="multipart/form-data">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+            <input type="hidden" name="operation" value="delete"/>
+            <input type="hidden" name="postid" value="{{ post['postid'] }}"/>
+            <input type="submit" name="delete" value="delete this post"/>
+        </form>
+    {%endif%}
+    
+
+</body>

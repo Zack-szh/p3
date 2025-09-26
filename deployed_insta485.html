@@ -1,0 +1,26 @@
+<head> 
+    <meta charset="utf-8">
+    <title> insta485 </title>
+</head>
+
+<body>
+    <nav>  <a href="/">insta485</a> | 
+       
+        <a href="/explore/">explore</a> | 
+        <!--<a href="/users//"></a>-->
+        <a href="/accounts/login/">login</a>
+    </nav>
+
+    <form action="/accounts/login/" method="post">
+        <input type="hidden" name="csrf_token" value="ImEwMjUyY2E4ZDBhZmMyODhkMjE3OWI2MmU3ZmM3YTg0YzBjYmI4YzQi.aNLhbg.4lTsdZj6WSVf0sO_hGZpn0ZQQf4">
+        <input type="text" name="username" placeholder="Username" required>
+        <input type="password" name="password" placeholder="Password" required>
+        <input type="submit" value="Login">
+    </form>
+
+    <p> 
+        Don't have an account? 
+        <a href="/accounts/create/">Sign up</a>
+    </p>
+
+</body>

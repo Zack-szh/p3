@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head> 
+    <meta charset="utf-8">
+    <title> insta485 </title>
+</head>
+
+<body>
+    <!--Navigation bar-->>
+    <nav> 
+        <a href="/">insta485</a> | 
+        <a href="/explore/">explore</a> | 
+        <a href="/users/{{ logname }}/">{{ logname }}</a>
+    </nav>
+
+    <h1>Followers</h1>
+
+    {% for follower in followers %}
+    <div>
+        <a href="/users/{{ follower.username }}/">
+        <img src="{{ follower.user_img_url }}" alt="profilePic" height="40" width="40">
+        {{ follower.username }}
+        </a>
+        {% if logname != follower.username and follower.logname_follows_username %}
+        <p>following</p>
+        <form action="/users/{{ logname }}/following/?target=/users/{{ username }}/" method="post" enctype="multipart/form-data">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+            <input type="submit" name="unfollow" value="unfollow"/>
+            <input type="hidden" name="username" value="{{ follower.username }}"/>
+            <input type="hidden" name="operation" value="unfollow"/>
+        </form>
+        {% elif logname != follower.username %}
+        <p>not following</p>
+        <form action="/users/{{ logname }}/following/?target=/users/{{ username }}/" method="post" enctype="multipart/form-data">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+            <input type="submit" name="follow" value="follow"/>
+            <input type="hidden" name="username" value="{{ follower.username }}"/>
+            <input type="hidden" name="operation" value="follow"/>
+        </form>
+        {% endif %}
+    </div>
+    {% endfor %}
+    
+
+</body>

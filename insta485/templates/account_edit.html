@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<head> 
+    <meta charset="utf-8">
+    <title>insta485</title>
+</head>
+
+<body>
+    <nav>
+        <a href="/">insta485</a> | 
+        <a href="/explore/">explore</a> | 
+
+        <a href="/users/{{ username }}/">{{ username }}</a> |
+        <form action="{{ url_for('accounts') }}" method="post" style="display:inline;">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+            <input type="hidden" name="operation" value="logout"/>
+            <input type="submit" value="logout"/>
+        </form>
+
+    </nav>
+
+    <img
+    src="{{ url_for('uploaded_file', filename=pfp) }}"
+    alt="profile picture"
+    style="width:50px; height:50px;"
+    >
+    <p>{{ username }}</p>
+
+    <form action="{{ url_for('accounts') }}?target={{ url_for('accounts_edit') }}" method="post" enctype="multipart/form-data">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+        <input type="file" name="file" accept="image/*"/>
+        <input type="text" name="fullname" value="{{ fullname }}" required/>
+        <input type="text" name="email" value="{{ email }}" required/>
+        <input type="submit" name="update" value="submit"/>
+        <input type="hidden" name="operation" value="edit_account"/>
+    </form>
+
+
+    <p>
+        <a href="/accounts/password/">Change password</a>
+    </p>
+    <p>
+        <a href="/accounts/delete/">Delete account</a>
+    </p>
+</body>

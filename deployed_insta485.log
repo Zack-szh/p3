@@ -1,0 +1,25 @@
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0* Host ec2-3-131-160-253.us-east-2.compute.amazonaws.com:80 was resolved.
+* IPv6: (none)
+* IPv4: 3.131.160.253
+*   Trying 3.131.160.253:80...
+* Connected to ec2-3-131-160-253.us-east-2.compute.amazonaws.com (3.131.160.253) port 80
+> GET /accounts/login/ HTTP/1.1
+> Host: ec2-3-131-160-253.us-east-2.compute.amazonaws.com
+> User-Agent: curl/8.7.1
+> Accept: */*
+> 
+* Request completely sent off
+< HTTP/1.1 200 OK
+< Server: nginx/1.24.0 (Ubuntu)
+< Date: Tue, 23 Sep 2025 18:05:34 GMT
+< Content-Type: text/html; charset=utf-8
+< Content-Length: 785
+< Connection: keep-alive
+< Vary: Cookie
+< Set-Cookie: login=eyJjc3JmX3Rva2VuIjoiYTAyNTJjYThkMGFmYzI4OGQyMTc5YjYyZTdmYzdhODRjMGNiYjhjNCJ9.aNLhbg.S17xuuh0LM2M8-S_sXkLkPsHwYY; HttpOnly; Path=/
+< 
+{ [785 bytes data]
+100   785  100   785    0     0  17918      0 --:--:-- --:--:-- --:--:-- 18255
+* Connection #0 to host ec2-3-131-160-253.us-east-2.compute.amazonaws.com left intact

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head> 
+    <meta charset="utf-8">
+    <title> insta485 </title>
+</head>
+
+<body>
+    <!--Navigation bar-->>
+    <nav> 
+        <a href="/">insta485</a> | 
+        <a href="/explore/">explore</a> | 
+        <a href="/users/{{ logname }}/">{{ logname }}</a>
+    </nav>
+
+    <h1>Discover People</h1>  
+    {% for follow in not_following %}
+        {% if follow.username != logname%}
+            <a href="/users/{{ follow.username }}/"> 
+                <img src="{{ follow.user_img_url }}" alt="profilePic" height="40" width="40"> 
+                {{ follow.username }}
+                <br> 
+            </a>
+
+            <form action="/following/?target={{ request.path }}" method="post" enctype="multipart/form-data">
+                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                <input type="submit" name="follow" value="follow"/>
+                <input type="hidden" name="username" value="{{ follow.username }}"/>
+                <input type="hidden" name="operation" value="follow"/>
+            </form>
+        {%endif%}
+    {% endfor %}
+
+    
+
+</body> 
