@@ -2,6 +2,7 @@
 import flask
 from flask_wtf.csrf import CSRFProtect
 
+
 # app is a single object used by all the code modules in this package
 app = flask.Flask(__name__)  # pylint: disable=invalid-name
 
@@ -22,6 +23,6 @@ app.config.from_envvar('INSTA485_SETTINGS', silent=True)
 # circular import, which is naughty, but Flask was designed that way.
 # (Reference http://flask.pocoo.org/docs/patterns/packages/)  We're
 # going to tell pylint and pycodestyle to ignore this coding style violation.
-
 import insta485.views  # noqa: E402  pylint: disable=wrong-import-position
 import insta485.model  # noqa: E402  pylint: disable=wrong-import-position
+import insta485.api    # noqa: E402  pylint: disable=wrong-import-position

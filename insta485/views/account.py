@@ -5,8 +5,8 @@ import pathlib
 import uuid
 
 import flask
-
 import insta485
+from insta485.auth import authenticate_user
 
 
 @insta485.app.route('/accounts/login/', methods=['GET', 'POST'])
@@ -33,28 +33,6 @@ def login():
         return flask.render_template('login.html')
 
     return flask.render_template('login.html')
-
-
-def authenticate_user(username, password):
-    """Verify username and password."""
-    connection = insta485.model.get_db()
-    cur = connection.execute(
-        "SELECT username, password FROM users WHERE username = ?",
-        (username,)
-    )
-    user = cur.fetchone()
-    if user is None:
-        return None  # User doesn't exist
-
-    # Verify password
-    stored_hash = user["password"]
-    salt, hashed_password = stored_hash.split("$")[1:]
-    hash_obj = hashlib.sha512()
-    hash_obj.update((salt + password).encode("utf-8"))
-
-    if hash_obj.hexdigest() == hashed_password:
-        return user  # Return user info if password matches
-    return None
 
 
 @insta485.app.route('/accounts/logout/', methods=['POST'])
@@ -179,11 +157,11 @@ def do_login(connection, target):
         "SELECT username, password FROM users WHERE username = ?",
         (username,)
     )
-    user = cur.fetchone()
-    if user is None:
+    u = cur.fetchone()
+    if u is None:
         flask.abort(403)
 
-    stored_hash = user['password']
+    stored_hash = u['password']
     try:
         algorithm, salt, hashed_password = stored_hash.split('$')
     except ValueError:
